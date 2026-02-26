@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'next/navigation';
 import type { Locale } from '@/i18n.config';
 import { getTranslation } from '@/lib/translations';
 import { Button } from '@/components/ui/button';
@@ -23,20 +24,11 @@ interface Expert {
   languages: string[];
 }
 
-interface PageProps {
-  params: Promise<{ locale: Locale }>;
-}
-
-export default function ExpertsPage({ params }: PageProps) {
-  const [locale, setLocale] = React.useState<Locale>('en');
+export default function ExpertsPage() {
+  const params = useParams();
+  const locale = (params?.locale as Locale) || 'en';
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('');
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    params.then((p) => setLocale(p.locale as Locale));
-    setMounted(true);
-  }, [params]);
 
   const t = getTranslation(locale);
 

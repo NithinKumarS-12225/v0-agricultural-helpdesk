@@ -1,18 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import type { Locale } from '@/i18n.config';
 import { locales } from '@/i18n.config';
+import { useTheme } from '@/lib/theme-context';
 import { getTranslation } from '@/lib/translations';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Moon, Sun, Globe, User, Bell, Lock, LogOut } from 'lucide-react';
-
-interface PageProps {
-  params: Promise<{ locale: Locale }>;
-}
 
 interface UserProfile {
   name: string;
@@ -21,9 +18,11 @@ interface UserProfile {
   region: string;
 }
 
-export default function AccountPage({ params }: PageProps) {
-  const [locale, setLocale] = React.useState<Locale>('en');
-  const [isDark, setIsDark] = useState(false);
+export default function AccountPage() {
+  const routerInstance = useRouter();
+  const routerParams = useParams();
+  const locale = (routerParams?.locale as Locale) || 'en';
+  const { toggleTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [profile, setProfile] = useState<UserProfile>({
     name: '',
@@ -32,36 +31,18 @@ export default function AccountPage({ params }: PageProps) {
     region: '',
   });
   const [isEditing, setIsEditing] = useState(false);
-  const router = useRouter();
 
   useEffect(() => {
-    params.then((p) => setLocale(p.locale as Locale));
     setMounted(true);
-
-    // Check dark mode
-    const isDarkMode = document.documentElement.classList.contains('dark');
-    setIsDark(isDarkMode);
 
     // Load profile from localStorage
     const saved = localStorage.getItem('user-profile');
     if (saved) {
       setProfile(JSON.parse(saved));
     }
-  }, [params]);
+  }, [locale]);
 
   const t = getTranslation(locale);
-
-  const toggleTheme = () => {
-    const newDarkMode = !isDark;
-    setIsDark(newDarkMode);
-    if (newDarkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    }
-  };
 
   const handleProfileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -75,11 +56,11 @@ export default function AccountPage({ params }: PageProps) {
 
   const handleLogout = () => {
     localStorage.clear();
-    router.push(`/${locale}`);
+    routerInstance.push(`/${locale}`);
   };
 
   const handleLanguageChange = (newLocale: Locale) => {
-    router.push(`/${newLocale}/account`);
+    routerInstance.push(`/${newLocale}/account`);
   };
 
   if (!mounted) return null;

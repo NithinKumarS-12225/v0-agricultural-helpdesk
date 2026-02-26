@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import type { Locale } from '@/i18n.config';
 import { getTranslation } from '@/lib/translations';
 import { Button } from '@/components/ui/button';
@@ -35,12 +36,9 @@ interface LoanScheme {
   documents: string[];
 }
 
-interface PageProps {
-  params: Promise<{ locale: Locale }>;
-}
-
-export default function SchemesPage({ params }: PageProps) {
-  const [locale, setLocale] = React.useState<Locale>('en');
+export default function SchemesPage() {
+  const params = useParams();
+  const locale = (params?.locale as Locale) || 'en';
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [showTab, setShowTab] = useState<'schemes' | 'loans'>('schemes');

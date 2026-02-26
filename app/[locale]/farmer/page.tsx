@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import type { Locale } from '@/i18n.config';
 import { getTranslation } from '@/lib/translations';
 import { Button } from '@/components/ui/button';
@@ -15,12 +16,9 @@ interface ChatMessage {
   timestamp: Date;
 }
 
-interface PageProps {
-  params: Promise<{ locale: Locale }>;
-}
-
-export default function FarmerPage({ params }: PageProps) {
-  const [locale, setLocale] = React.useState<Locale>('en');
+export default function FarmerPage() {
+  const params = useParams();
+  const locale = (params?.locale as Locale) || 'en';
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +27,6 @@ export default function FarmerPage({ params }: PageProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    params.then((p) => setLocale(p.locale as Locale));
     setMounted(true);
     // Load chat history from localStorage
     const saved = localStorage.getItem(`farmer-chat-${locale}`);
@@ -41,7 +38,7 @@ export default function FarmerPage({ params }: PageProps) {
         }))
       );
     }
-  }, [params, locale]);
+  }, [locale]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });

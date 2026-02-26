@@ -1,15 +1,17 @@
-import React from 'react';
+import type { ReactNode } from 'react';
 import type { Locale } from '@/i18n.config';
 import Navigation from '@/components/Navigation';
 import ThemeProvider from '@/components/ThemeProvider';
 
+interface LocaleLayoutProps {
+  children: ReactNode;
+  params: Promise<{ locale: Locale }>;
+}
+
 export default async function LocaleLayout({
   children,
   params,
-}: {
-  children: React.ReactNode;
-  params: Promise<{ locale: Locale }>;
-}) {
+}: LocaleLayoutProps) {
   const { locale } = await params;
 
   return (

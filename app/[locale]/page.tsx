@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useParams } from 'next/navigation';
 import type { Locale } from '@/i18n.config';
 import { getTranslation } from '@/lib/translations';
 import { Button } from '@/components/ui/button';
@@ -8,16 +9,9 @@ import { Card } from '@/components/ui/card';
 import Link from 'next/link';
 import { Sprout, Users, Truck, Cloud, FileText, Settings } from 'lucide-react';
 
-interface PageProps {
-  params: Promise<{ locale: Locale }>;
-}
-
-export default function HomePage({ params }: PageProps) {
-  const [locale, setLocale] = React.useState<Locale>('en');
-
-  React.useEffect(() => {
-    params.then((p) => setLocale(p.locale as Locale));
-  }, [params]);
+export default function HomePage() {
+  const params = useParams();
+  const locale = (params?.locale as Locale) || 'en';
 
   const t = getTranslation(locale);
 

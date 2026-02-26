@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
 import type { Locale } from '@/i18n.config';
 import { getTranslation } from '@/lib/translations';
 import { Button } from '@/components/ui/button';
@@ -26,12 +27,9 @@ interface WeatherData {
   insights: string[];
 }
 
-interface PageProps {
-  params: Promise<{ locale: Locale }>;
-}
-
-export default function WeatherPage({ params }: PageProps) {
-  const [locale, setLocale] = React.useState<Locale>('en');
+export default function WeatherPage() {
+  const params = useParams();
+  const locale = (params?.locale as Locale) || 'en';
   const [location, setLocation] = useState('');
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -39,7 +37,6 @@ export default function WeatherPage({ params }: PageProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    params.then((p) => setLocale(p.locale as Locale));
     setMounted(true);
     // Try to get user's location
     if (navigator.geolocation) {
