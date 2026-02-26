@@ -29,11 +29,6 @@ export default function ExpertsPage() {
   const locale = (params?.locale as Locale) || 'en';
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('');
-  const [mounted, setMounted] = useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const t = getTranslation(locale);
 
@@ -53,8 +48,6 @@ export default function ExpertsPage() {
 
     return matchesSearch && matchesSpecialty;
   });
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-background">

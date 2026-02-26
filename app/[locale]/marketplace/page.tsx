@@ -27,7 +27,6 @@ export default function MarketplacePage() {
   const [showForm, setShowForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
-  const [mounted, setMounted] = useState(false);
 
   // Form states
   const [formData, setFormData] = useState({
@@ -40,15 +39,12 @@ export default function MarketplacePage() {
   });
 
   useEffect(() => {
-    setMounted(true);
-    setMounted(true);
-
     // Load products from localStorage
     const saved = localStorage.getItem('marketplace-products');
     if (saved) {
       setProducts(JSON.parse(saved));
     }
-  }, [params]);
+  }, []);
 
   const t = getTranslation(locale);
   const { crops, landSizes, locations } = cropsData;
@@ -95,11 +91,6 @@ export default function MarketplacePage() {
     product.crop.toLowerCase().includes(searchTerm.toLowerCase()) ||
     product.location.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  if (!mounted) return null;
-
-  // Get location options
-  const locationOptions = locations.flatMap((l) => l.districts);
 
   return (
     <div className="min-h-screen bg-background">

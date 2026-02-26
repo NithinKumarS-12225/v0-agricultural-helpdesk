@@ -34,10 +34,8 @@ export default function WeatherPage() {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     // Try to get user's location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -51,7 +49,7 @@ export default function WeatherPage() {
         }
       );
     }
-  }, [params]);
+  }, []);
 
   const t = getTranslation(locale);
 
@@ -104,8 +102,6 @@ export default function WeatherPage() {
       setLocation('');
     }
   };
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-background">

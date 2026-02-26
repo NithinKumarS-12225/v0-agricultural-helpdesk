@@ -43,11 +43,6 @@ export default function SchemesPage() {
   const [selectedType, setSelectedType] = useState('');
   const [showTab, setShowTab] = useState<'schemes' | 'loans'>('schemes');
   const [selectedScheme, setSelectedScheme] = useState<Scheme | null>(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const t = getTranslation(locale);
 
@@ -80,8 +75,6 @@ export default function SchemesPage() {
     livestock: 'Livestock',
     fisheries: 'Fisheries',
   };
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-background">

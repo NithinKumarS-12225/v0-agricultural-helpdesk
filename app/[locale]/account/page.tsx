@@ -23,7 +23,6 @@ export default function AccountPage() {
   const routerParams = useParams();
   const locale = (routerParams?.locale as Locale) || 'en';
   const { isDark, toggleTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
   const [profile, setProfile] = useState<UserProfile>({
     name: '',
     email: '',
@@ -33,8 +32,6 @@ export default function AccountPage() {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-
     // Load profile from localStorage
     const saved = localStorage.getItem('user-profile');
     if (saved) {
@@ -62,8 +59,6 @@ export default function AccountPage() {
   const handleLanguageChange = (newLocale: Locale) => {
     routerInstance.push(`/${newLocale}/account`);
   };
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-background">

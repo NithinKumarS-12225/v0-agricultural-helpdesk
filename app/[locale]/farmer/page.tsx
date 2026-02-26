@@ -24,10 +24,8 @@ export default function FarmerPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
     // Load chat history from localStorage
     const saved = localStorage.getItem(`farmer-chat-${locale}`);
     if (saved) {
@@ -107,8 +105,6 @@ export default function FarmerPage() {
     setMessages([]);
     localStorage.removeItem(`farmer-chat-${locale}`);
   };
-
-  if (!mounted) return null;
 
   return (
     <div className="min-h-screen bg-background">
