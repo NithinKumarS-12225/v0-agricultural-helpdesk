@@ -99,7 +99,7 @@ export default function Navigation() {
                 >
                   <div className="flex items-center justify-center">
                     <span className="text-sm font-semibold">
-                      {locale === 'en' ? 'EN' : locale === 'hi' ? 'HI' : 'KN'}
+                      {locale === 'en' ? 'EN' : locale === 'hi' ? 'HI' : locale === 'kn' ? 'KN' : locale === 'ta' ? 'TA' : locale === 'te' ? 'TE' : locale === 'bn' ? 'BN' : locale === 'ml' ? 'ML' : 'UR'}
                     </span>
                   </div>
                 </Button>
@@ -125,6 +125,41 @@ export default function Navigation() {
                 >
                   <span className="font-medium">ಕನ್ನಡ</span>
                   {locale === 'kn' && <span className="ml-2 text-primary font-bold">✓</span>}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleLanguageChange('ta')}
+                  className="cursor-pointer"
+                >
+                  <span className="font-medium">தமிழ்</span>
+                  {locale === 'ta' && <span className="ml-2 text-primary font-bold">✓</span>}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleLanguageChange('te')}
+                  className="cursor-pointer"
+                >
+                  <span className="font-medium">తెలుగు</span>
+                  {locale === 'te' && <span className="ml-2 text-primary font-bold">✓</span>}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleLanguageChange('bn')}
+                  className="cursor-pointer"
+                >
+                  <span className="font-medium">বাংলা</span>
+                  {locale === 'bn' && <span className="ml-2 text-primary font-bold">✓</span>}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleLanguageChange('ml')}
+                  className="cursor-pointer"
+                >
+                  <span className="font-medium">മലയാളം</span>
+                  {locale === 'ml' && <span className="ml-2 text-primary font-bold">✓</span>}
+                </DropdownMenuItem>
+                <DropdownMenuItem 
+                  onClick={() => handleLanguageChange('ur')}
+                  className="cursor-pointer"
+                >
+                  <span className="font-medium">اردو</span>
+                  {locale === 'ur' && <span className="ml-2 text-primary font-bold">✓</span>}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

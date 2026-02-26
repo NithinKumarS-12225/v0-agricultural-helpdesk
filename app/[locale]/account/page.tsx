@@ -203,22 +203,28 @@ export default function AccountPage() {
                       <p className="text-sm text-muted-foreground">Choose your preferred language</p>
                     </div>
                   </div>
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-4 gap-2">
                     {(locales as Locale[]).map((loc) => (
                       <Button
                         key={loc}
                         variant={locale === loc ? 'default' : 'outline'}
                         onClick={() => handleLanguageChange(loc)}
-                        className="text-sm font-semibold"
+                        className="text-xs font-semibold"
+                        size="sm"
                       >
-                        {loc === 'en' ? 'EN' : loc === 'hi' ? 'HI' : 'KN'}
+                        {loc === 'en' ? 'EN' : loc === 'hi' ? 'HI' : loc === 'kn' ? 'KN' : loc === 'ta' ? 'TA' : loc === 'te' ? 'TE' : loc === 'bn' ? 'BN' : loc === 'ml' ? 'ML' : 'UR'}
                       </Button>
                     ))}
                   </div>
-                  <div className="mt-3 space-y-1 text-xs text-muted-foreground">
-                    <p>• English: {locale === 'en' ? '✓ Selected' : 'Available'}</p>
-                    <p>• हिन्दी: {locale === 'hi' ? '✓ Selected' : 'उपलब्ध'}</p>
-                    <p>• ಕನ್ನಡ: {locale === 'kn' ? '✓ ಆಯ್ದ' : 'ಲಭ್ಯ'}</p>
+                  <div className="mt-4 grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+                    <p>• English {locale === 'en' ? '✓' : ''}</p>
+                    <p>• हिन्दी {locale === 'hi' ? '✓' : ''}</p>
+                    <p>• ಕನ್ನಡ {locale === 'kn' ? '✓' : ''}</p>
+                    <p>• தமிழ் {locale === 'ta' ? '✓' : ''}</p>
+                    <p>• తెలుగు {locale === 'te' ? '✓' : ''}</p>
+                    <p>• বাংলা {locale === 'bn' ? '✓' : ''}</p>
+                    <p>• മലയാളം {locale === 'ml' ? '✓' : ''}</p>
+                    <p>• اردو {locale === 'ur' ? '✓' : ''}</p>
                   </div>
                 </div>
 

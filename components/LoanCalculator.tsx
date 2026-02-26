@@ -285,12 +285,9 @@ export default function LoanCalculator({ isOpen, onClose, locale }: LoanCalculat
           </div>
 
           {/* Close Button */}
-          <div className="flex gap-3 border-t border-border pt-6">
-            <Button variant="outline" className="flex-1" onClick={onClose}>
-              {getTranslation(locale, 'reset')}
-            </Button>
-            <Button className="flex-1" onClick={onClose}>
-              {getTranslation(locale, 'calculate')}
+          <div className="border-t border-border pt-6 flex justify-end">
+            <Button onClick={onClose}>
+              Close
             </Button>
           </div>
         </div>
