@@ -6,7 +6,6 @@ import type { Locale } from '@/i18n.config';
 import { getTranslation } from '@/lib/translations';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import AICallAgentModal from '@/components/AICallAgentModal';
 import Link from 'next/link';
 import { Sprout, Users, Truck, Cloud, FileText, Settings, Phone } from 'lucide-react';
 
@@ -149,8 +148,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* AI Call Agent */}
-      <AICallAgentModal isOpen={showCallAgent} onClose={() => setShowCallAgent(false)} locale={locale} />
+      {/* AI Call Agent - Coming Soon */}
     </div>
   );
 }

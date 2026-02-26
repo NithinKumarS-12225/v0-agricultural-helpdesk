@@ -16,17 +16,20 @@ const ThemeContext = createContext<ThemeContextType>({
 
 export function ThemeContextProvider({ children }: { children: React.ReactNode }) {
   const [isDark, setIsDark] = useState(false);
-  const [mounted, setMounted] = useState(false);
+  const [mounted, setMounted] = useState(true);
 
   useEffect(() => {
-    setMounted(true);
-    const stored = localStorage.getItem('theme');
-    const isDarkMode = stored
-      ? stored === 'dark'
-      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    try {
+      const stored = localStorage.getItem('theme');
+      const isDarkMode = stored
+        ? stored === 'dark'
+        : window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    setIsDark(isDarkMode);
-    applyTheme(isDarkMode);
+      setIsDark(isDarkMode);
+      applyTheme(isDarkMode);
+    } catch (error) {
+      console.error('Theme setup error:', error);
+    }
   }, []);
 
   const applyTheme = (isDarkMode: boolean) => {
