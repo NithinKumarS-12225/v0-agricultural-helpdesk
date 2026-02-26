@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "farmer": "Farmer Chat",
+    "experts": "Expert Directory",
+    "marketplace": "Marketplace",
+    "weather": "Weather",
+    "schemes": "Schemes",
+    "account": "Account"
+  },
+  "home": {
+    "title": "Kisan Call Centre - Agricultural Helpdesk",
+    "subtitle": "Your AI-powered assistant for farming excellence",
+    "description": "Get expert guidance on crop management, government schemes, real-time weather, and connect with certified agricultural experts."
+  },
+  "farmer": {
+    "title": "Farmer Query Assistant",
+    "description": "Ask any agricultural question and get instant answers from our AI expert powered by advanced language models",
+    "placeholder": "Ask your farming question here...",
+    "send": "Send Query",
+    "loading": "Thinking...",
+    "history": "Recent Queries"
+  },
+  "experts": {
+    "title": "Government Approved Experts",
+    "description": "Connect with certified agricultural specialists",
+    "search": "Search experts...",
+    "filter": "Filter by specialty",
+    "specialty": "Specialty",
+    "experience": "Experience",
+    "location": "Location",
+    "contact": "Contact Expert",
+    "phone": "Phone",
+    "email": "Email",
+    "serviceArea": "Service Area"
+  },
+  "marketplace": {
+    "title": "Farmer Product Marketplace",
+    "description": "List and sell your agricultural products",
+    "listProduct": "List New Product",
+    "crop": "Crop Type",
+    "landSize": "Land Size",
+    "location": "Location",
+    "quantity": "Quantity",
+    "unit": "Unit",
+    "price": "Price (₹/unit)",
+    "submit": "List Product",
+    "inquiry": "Send Inquiry",
+    "listings": "Product Listings"
+  },
+  "weather": {
+    "title": "Real-time Weather Analysis",
+    "description": "Get weather insights for better farming decisions",
+    "current": "Current Weather",
+    "forecast": "7-Day Forecast",
+    "location": "Enter Location",
+    "temperature": "Temperature",
+    "humidity": "Humidity",
+    "windSpeed": "Wind Speed",
+    "rainfall": "Rainfall",
+    "insights": "Agricultural Insights"
+  },
+  "schemes": {
+    "title": "Government Schemes & Loans",
+    "description": "Explore subsidies, insurance, and credit programs",
+    "search": "Search schemes...",
+    "filter": "Filter by type",
+    "type": "Type",
+    "eligibility": "Eligibility",
+    "coverage": "Coverage",
+    "apply": "Learn More",
+    "loans": "Loan Programs"
+  },
+  "account": {
+    "title": "Account Settings",
+    "profile": "Profile",
+    "preferences": "Preferences",
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "notifications": "Notifications",
+    "privacy": "Privacy",
+    "logout": "Logout"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "success": "Success!",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back"
+  }
+}
