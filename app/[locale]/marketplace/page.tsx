@@ -19,6 +19,9 @@ interface Product {
   unit: string;
   price: number;
   date: string;
+  sellerName: string;
+  sellerPhone: string;
+  sellerAddress: string;
 }
 
 export default function MarketplacePage() {
@@ -35,6 +38,9 @@ export default function MarketplacePage() {
     quantity: '',
     unit: 'kg',
     price: '',
+    sellerName: '',
+    sellerPhone: '',
+    sellerAddress: '',
   });
 
   useEffect(() => {
@@ -61,7 +67,7 @@ export default function MarketplacePage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.crop || !formData.landSize || !formData.location || !formData.quantity || !formData.price) {
+    if (!formData.crop || !formData.landSize || !formData.location || !formData.quantity || !formData.price || !formData.sellerName || !formData.sellerPhone || !formData.sellerAddress) {
       alert('Please fill all fields');
       return;
     }
@@ -75,6 +81,9 @@ export default function MarketplacePage() {
       unit: formData.unit,
       price: parseFloat(formData.price),
       date: new Date().toLocaleDateString(locale),
+      sellerName: formData.sellerName,
+      sellerPhone: formData.sellerPhone,
+      sellerAddress: formData.sellerAddress,
     };
 
     const updated = [...products, newProduct];
@@ -198,9 +207,42 @@ export default function MarketplacePage() {
                     name="price"
                     value={formData.price}
                     onChange={handleInputChange}
-                    placeholder="Enter price"
+                    placeholder="Enter price /kg"
                   />
                 </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-medium">Seller Name</label>
+                  <Input
+                    type="text"
+                    name="sellerName"
+                    value={formData.sellerName}
+                    onChange={handleInputChange}
+                    placeholder="Your full name"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-2 block text-sm font-medium">Phone Number</label>
+                  <Input
+                    type="tel"
+                    name="sellerPhone"
+                    value={formData.sellerPhone}
+                    onChange={handleInputChange}
+                    placeholder="+91 XXXXX XXXXX"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm font-medium">Address</label>
+                <Input
+                  type="text"
+                  name="sellerAddress"
+                  value={formData.sellerAddress}
+                  onChange={handleInputChange}
+                  placeholder="Your complete address"
+                />
               </div>
 
               <div className="flex gap-3">
@@ -210,7 +252,7 @@ export default function MarketplacePage() {
                   variant="outline"
                   onClick={() => {
                     setShowForm(false);
-                    setFormData({ crop: '', landSize: '', location: '', quantity: '', unit: 'kg', price: '' });
+                    setFormData({ crop: '', landSize: '', location: '', quantity: '', unit: 'kg', price: '', sellerName: '', sellerPhone: '', sellerAddress: '' });
                   }}
                 >
                   {t.common.cancel}
@@ -254,6 +296,15 @@ export default function MarketplacePage() {
                     <div className="pt-2 border-t border-border">
                       <p className="text-xs font-semibold text-muted-foreground mb-1">{t.marketplace.landSize}</p>
                       <p className="text-sm text-foreground">{product.landSize}</p>
+                    </div>
+
+                    <div className="pt-3 border-t border-border mt-3">
+                      <p className="text-xs font-semibold text-muted-foreground mb-2">Seller Details</p>
+                      <div className="space-y-1 text-sm">
+                        <p className="text-foreground"><span className="font-medium">Name:</span> {product.sellerName}</p>
+                        <p className="text-foreground flex items-center gap-2"><Phone className="h-3 w-3" /> {product.sellerPhone}</p>
+                        <p className="text-foreground"><span className="font-medium">Address:</span> {product.sellerAddress}</p>
+                      </div>
                     </div>
                   </div>
 

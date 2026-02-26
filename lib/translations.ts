@@ -4,6 +4,11 @@ const translations: Record<Locale, Record<string, any>> = {
   en: require('@/translations/en.json'),
   kn: require('@/translations/kn.json'),
   hi: require('@/translations/hi.json'),
+  ta: require('@/translations/ta.json'),
+  te: require('@/translations/te.json'),
+  bn: require('@/translations/bn.json'),
+  ml: require('@/translations/ml.json'),
+  ur: require('@/translations/ur.json'),
 };
 
 export function getTranslation(locale: Locale) {

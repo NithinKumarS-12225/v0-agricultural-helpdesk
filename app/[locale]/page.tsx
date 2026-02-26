@@ -1,17 +1,18 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 import type { Locale } from '@/i18n.config';
 import { getTranslation } from '@/lib/translations';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Link from 'next/link';
-import { Sprout, Users, Truck, Cloud, FileText, Settings } from 'lucide-react';
+import { Sprout, Users, Truck, Cloud, FileText, Settings, Phone } from 'lucide-react';
 
 export default function HomePage() {
   const params = useParams();
   const locale = (params?.locale as Locale) || 'en';
+  const [showCallAgent, setShowCallAgent] = useState(false);
 
   const t = getTranslation(locale);
 
@@ -77,6 +78,10 @@ export default function HomePage() {
           <p className="mt-4 text-xl text-muted-foreground sm:text-2xl">{t.home.subtitle}</p>
           <p className="mt-6 text-lg text-muted-foreground">{t.home.description}</p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <Button size="lg" className="w-full sm:w-auto bg-green-600 hover:bg-green-700 flex items-center justify-center gap-2" onClick={() => setShowCallAgent(true)}>
+              <Phone className="h-5 w-5" />
+              Call AI Agent Now
+            </Button>
             <Link href={`/${locale}/farmer`}>
               <Button size="lg" className="w-full sm:w-auto">
                 {t.nav.farmer}
@@ -136,12 +141,64 @@ export default function HomePage() {
               <p className="mt-2 text-muted-foreground">Government Schemes</p>
             </div>
             <div>
-              <div className="text-4xl font-bold text-primary">3</div>
+              <div className="text-4xl font-bold text-primary">8</div>
               <p className="mt-2 text-muted-foreground">Languages Supported</p>
             </div>
           </div>
         </div>
       </div>
+
+      {/* AI Call Agent Modal */}
+      {showCallAgent && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <Card className="w-full max-w-md">
+            <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-6 text-white">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold">AI Farm Agent</h2>
+                <button 
+                  onClick={() => setShowCallAgent(false)}
+                  className="text-white hover:bg-white/20 rounded-full p-2"
+                >
+                  ×
+                </button>
+              </div>
+              <p className="mt-2 opacity-90">Call our AI agent for instant farming guidance</p>
+            </div>
+            <div className="p-6 space-y-4">
+              <div className="text-center">
+                <div className="mx-auto h-16 w-16 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mb-4">
+                  <Phone className="h-8 w-8 text-green-600 dark:text-green-400" />
+                </div>
+                <p className="font-semibold text-foreground">Ready to assist you</p>
+                <p className="text-sm text-muted-foreground mt-1">Available in 8 languages</p>
+              </div>
+
+              <div className="bg-muted p-4 rounded-lg text-sm text-center text-muted-foreground">
+                <p>Status: <span className="font-semibold text-green-600">Online (Groq AI)</span></p>
+                <p className="mt-1 text-xs">Fallback: Offline mode available</p>
+              </div>
+
+              <div className="space-y-2">
+                <Button className="w-full bg-green-600 hover:bg-green-700" size="lg">
+                  <Phone className="mr-2 h-4 w-4" />
+                  Start Call
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => setShowCallAgent(false)}
+                >
+                  Close
+                </Button>
+              </div>
+
+              <div className="text-xs text-center text-muted-foreground">
+                <p>Tip: Speak your farming question clearly in any regional language</p>
+              </div>
+            </div>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
