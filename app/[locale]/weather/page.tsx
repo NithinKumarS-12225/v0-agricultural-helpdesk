@@ -56,11 +56,19 @@ export default function WeatherPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [permissionDenied, setPermissionDenied] = useState(false);
+  const [apiKeyMissing, setApiKeyMissing] = useState(false);
 
   const t = getTranslation(locale);
   const OPENWEATHER_API_KEY = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY || '';
 
   useEffect(() => {
+    // Check if API key is configured
+    if (!OPENWEATHER_API_KEY) {
+      setApiKeyMissing(true);
+      setError('Weather API key is not configured. Please add NEXT_PUBLIC_OPENWEATHER_API_KEY environment variable.');
+      return;
+    }
+
     // Request geolocation on mount
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -76,7 +84,7 @@ export default function WeatherPage() {
         }
       );
     }
-  }, []);
+  }, [OPENWEATHER_API_KEY]);
 
   const fetchWeatherByCoords = async (lat: number, lon: number) => {
     try {
@@ -85,7 +93,8 @@ export default function WeatherPage() {
       setPermissionDenied(false);
 
       if (!OPENWEATHER_API_KEY) {
-        setError('Weather API key not configured');
+        setApiKeyMissing(true);
+        setError('Weather API key is not configured. Please add NEXT_PUBLIC_OPENWEATHER_API_KEY to environment variables.');
         return;
       }
 
@@ -94,12 +103,16 @@ export default function WeatherPage() {
       );
 
       if (!currentResponse.ok) {
+        if (currentResponse.status === 401) {
+          throw new Error('Invalid API key. Please check your NEXT_PUBLIC_OPENWEATHER_API_KEY.');
+        }
         throw new Error('Failed to fetch weather data');
       }
 
       const current = await currentResponse.json();
       setWeatherData(current);
       setCurrentLocation(current.name);
+      setApiKeyMissing(false);
 
       // Fetch 5-day forecast
       const forecastResponse = await fetch(
@@ -111,7 +124,8 @@ export default function WeatherPage() {
         setForecastData(forecast);
       }
     } catch (err) {
-      setError('Failed to fetch weather data. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch weather data. Please try again.';
+      setError(errorMessage);
       console.error('[v0] Weather fetch error:', err);
     } finally {
       setLoading(false);
@@ -126,7 +140,8 @@ export default function WeatherPage() {
       setError('');
 
       if (!OPENWEATHER_API_KEY) {
-        setError('Weather API key not configured');
+        setApiKeyMissing(true);
+        setError('Weather API key is not configured. Please add NEXT_PUBLIC_OPENWEATHER_API_KEY to environment variables.');
         return;
       }
 
@@ -148,9 +163,11 @@ export default function WeatherPage() {
       const { lat, lon } = geoData[0];
       setSearchLocation('');
       setPermissionDenied(false);
+      setApiKeyMissing(false);
       await fetchWeatherByCoords(lat, lon);
     } catch (err) {
-      setError('Failed to find location. Please try another search.');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to find location. Please try another search.';
+      setError(errorMessage);
       console.error('[v0] Geo search error:', err);
     } finally {
       setLoading(false);
@@ -218,7 +235,12 @@ export default function WeatherPage() {
         {error && !permissionDenied && (
           <Card className="mb-8 border-destructive/50 bg-destructive/10 p-4 text-destructive flex gap-2">
             <AlertCircle className="h-5 w-5 flex-shrink-0" />
-            <p>{error}</p>
+            <div>
+              <p>{error}</p>
+              {apiKeyMissing && (
+                <p className="text-xs mt-2">Get your free API key from <a href="https://openweathermap.org/api" target="_blank" rel="noopener noreferrer" className="underline">openweathermap.org/api</a> and add it to your environment variables.</p>
+              )}
+            </div>
           </Card>
         )}
 

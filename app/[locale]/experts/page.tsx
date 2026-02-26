@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import expertsData from '@/data/experts.json';
-import { Phone, Mail, MapPin, Award, Users, Search } from 'lucide-react';
+import { Phone, Mail, MapPin, Award, Users, Search, PhoneCall } from 'lucide-react';
 
 interface Expert {
   id: number;
@@ -29,13 +29,15 @@ export default function ExpertsPage() {
   const locale = (params?.locale as Locale) || 'en';
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('');
+  const [selectedState, setSelectedState] = useState('');
 
   const t = getTranslation(locale);
 
   const experts: Expert[] = expertsData.experts;
 
-  // Get unique specialties
+  // Get unique specialties and states
   const specialties = Array.from(new Set(experts.map((e) => e.specialty)));
+  const states = Array.from(new Set(experts.map((e) => e.state))).sort();
 
   // Filter experts
   const filtered = experts.filter((expert) => {
@@ -45,8 +47,9 @@ export default function ExpertsPage() {
       expert.state.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesSpecialty = !selectedSpecialty || expert.specialty === selectedSpecialty;
+    const matchesState = !selectedState || expert.state === selectedState;
 
-    return matchesSearch && matchesSpecialty;
+    return matchesSearch && matchesSpecialty && matchesState;
   });
 
   return (
@@ -61,7 +64,7 @@ export default function ExpertsPage() {
 
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {/* Search and Filter */}
-        <div className="mb-8 grid gap-4 sm:grid-cols-2">
+        <div className="mb-8 grid gap-4 sm:grid-cols-3">
           <div className="relative">
             <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
             <Input
@@ -80,6 +83,18 @@ export default function ExpertsPage() {
             {specialties.map((specialty) => (
               <option key={specialty} value={specialty}>
                 {specialty}
+              </option>
+            ))}
+          </select>
+          <select
+            value={selectedState}
+            onChange={(e) => setSelectedState(e.target.value)}
+            className="rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground"
+          >
+            <option value="">All States</option>
+            {states.map((state) => (
+              <option key={state} value={state}>
+                {state}
               </option>
             ))}
           </select>
@@ -153,8 +168,9 @@ export default function ExpertsPage() {
                       Email
                     </Button>
                   </a>
-                  <Button className="w-full" size="sm">
-                    {t.experts.contact}
+                  <Button className="w-full bg-green-600 hover:bg-green-700" size="sm">
+                    <PhoneCall className="mr-2 h-4 w-4" />
+                    Call Agri Expert
                   </Button>
                 </div>
               </Card>
