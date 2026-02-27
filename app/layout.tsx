@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: 'Kisan Call Centre - Agricultural Helpdesk',
   description: 'AI-powered agricultural helpdesk with expert guidance, real-time weather, government schemes, and farmer marketplace',
   generator: 'v0.app',
+  manifest: '/manifest.json',
   icons: {
     icon: [
       {

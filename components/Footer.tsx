@@ -85,7 +85,8 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-primary/10 rounded-full"
-                aria-label="Github"
+                title="Visit GitHub Repository"
+                aria-label="Github Profile"
               >
                 <Github className="h-5 w-5" />
               </a>
@@ -94,14 +95,16 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-primary/10 rounded-full"
-                aria-label="LinkedIn"
+                title="Connect on LinkedIn"
+                aria-label="LinkedIn Profile"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
                 href="mailto:nithinkumar12225@gmail.com"
                 className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-primary/10 rounded-full"
-                aria-label="Email"
+                title="Send Email"
+                aria-label="Email Contact"
               >
                 <Mail className="h-5 w-5" />
               </a>
