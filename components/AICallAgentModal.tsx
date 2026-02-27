@@ -43,6 +43,10 @@ export default function AICallAgentModal({ isOpen, onClose, locale }: AICallAgen
           console.log('[v0] Voice transcript received:', transcript);
           setInput(transcript);
           setIsListening(false);
+          // Auto-submit after voice capture
+          setTimeout(() => {
+            handleSendMessage();
+          }, 500);
         },
         onError: (error) => {
           console.error('[v0] Voice error:', error);
