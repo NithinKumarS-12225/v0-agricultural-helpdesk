@@ -6,6 +6,7 @@
     "weather": "Weather",
     "schemes": "Schemes",
     "bhoomiRtc": "Bhoomi RTC",
+    "donate": "Donate & Articles",
     "account": "Account"
   },
   "home": {
@@ -86,6 +87,24 @@
     "rtcNumber": "RTC Number",
     "surveyNumber": "Survey Number",
     "noData": "No land records found for this district"
+  },
+  "donate": {
+    "title": "Donate & Agriculture Articles",
+    "subtitle": "Support Agricultural Development in India",
+    "bankingSection": "Banking Details",
+    "supportMessage": "Your contribution helps us reach more farmers and provide quality agricultural information",
+    "accountHolderName": "Account Holder Name",
+    "bankName": "Bank Name",
+    "accountNumber": "Account Number",
+    "ifscCode": "IFSC Code",
+    "branch": "Branch",
+    "upiId": "UPI ID",
+    "qrCode": "Scan for Quick Payment",
+    "articlesSection": "Latest Agriculture Articles",
+    "readMore": "Read Article",
+    "publishedDate": "Published",
+    "category": "Category",
+    "shareArticle": "Share Article"
   },
   "account": {
     "title": "Account Settings",

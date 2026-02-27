@@ -39,6 +39,7 @@ export default function Navigation() {
     { href: 'bhoomi-rtc', label: t.nav.bhoomiRtc },
     { href: 'plant-disease', label: 'Plant Disease' },
     { href: 'schemes', label: t.nav.schemes },
+    { href: 'donate', label: t.nav.donate },
     { href: 'account', label: t.nav.account },
   ];
 
