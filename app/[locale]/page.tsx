@@ -78,10 +78,6 @@ export default function HomePage() {
           <p className="mt-4 text-xl text-muted-foreground sm:text-2xl">{t.home.subtitle}</p>
           <p className="mt-6 text-lg text-muted-foreground">{t.home.description}</p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <Button size="lg" className="w-full sm:w-auto bg-green-600 hover:bg-green-700 flex items-center justify-center gap-2" disabled title="Coming soon">
-              <Phone className="h-5 w-5" />
-              Call AI Agent Now
-            </Button>
             <a href="tel:7204954791">
               <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 flex items-center justify-center gap-2">
                 <Phone className="h-5 w-5" />
