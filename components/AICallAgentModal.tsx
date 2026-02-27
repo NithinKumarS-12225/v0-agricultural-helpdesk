@@ -140,6 +140,20 @@ export default function AICallAgentModal({ isOpen, onClose, locale }: AICallAgen
     }
   };
 
+  const handleVoiceInput = () => {
+    if (!voiceAssistant || !voiceAssistant.isSupported()) {
+      alert('Voice input is not supported in your browser');
+      return;
+    }
+
+    if (isListening) {
+      voiceAssistant.stopListening();
+      setIsListening(false);
+    } else {
+      voiceAssistant.startListening();
+    }
+  };
+
   if (!isOpen) return null;
 
   return (
