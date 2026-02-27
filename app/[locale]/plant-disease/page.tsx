@@ -6,7 +6,7 @@ import type { Locale } from '@/i18n.config';
 import { getTranslation } from '@/lib/translations';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Upload, Loader, AlertCircle, CheckCircle, Leaf, Droplets } from 'lucide-react';
+import { Upload, Loader, AlertCircle, CheckCircle, Leaf, Droplets, Zap } from 'lucide-react';
 
 interface DiseaseAnalysis {
   disease: string;
@@ -15,6 +15,8 @@ interface DiseaseAnalysis {
   symptoms: string[];
   treatment: string[];
   prevention: string[];
+  aiGeneratedTreatment?: string;
+  analysisTimestamp?: string;
 }
 
 export default function PlantDiseasePage() {
@@ -217,6 +219,19 @@ export default function PlantDiseasePage() {
                       ))}
                     </ul>
                   </Card>
+
+                  {/* AI-Generated Detailed Treatment */}
+                  {analysis.aiGeneratedTreatment && (
+                    <Card className="p-6 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950 border-blue-200 dark:border-blue-800">
+                      <h4 className="font-semibold mb-3 flex items-center gap-2">
+                        <Zap className="h-4 w-4 text-blue-600" />
+                        AI Expert Recommendations
+                      </h4>
+                      <div className="text-sm text-foreground space-y-2 whitespace-pre-wrap">
+                        {analysis.aiGeneratedTreatment}
+                      </div>
+                    </Card>
+                  )}
 
                   <Button onClick={() => fileInputRef.current?.click()} className="w-full">
                     Analyze Another Image
