@@ -32,11 +32,29 @@ export default function AccountPage() {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    // Load profile from localStorage
-    const saved = localStorage.getItem('user-profile');
-    if (saved) {
-      setProfile(JSON.parse(saved));
-    }
+    // Load profile from backend/localStorage
+    const loadProfile = async () => {
+      try {
+        const response = await fetch('/api/account?id=default');
+        if (response.ok) {
+          const data = await response.json();
+          setProfile(data);
+        } else {
+          // Fallback to localStorage
+          const saved = localStorage.getItem('user-profile');
+          if (saved) {
+            setProfile(JSON.parse(saved));
+          }
+        }
+      } catch (error) {
+        // Fallback to localStorage
+        const saved = localStorage.getItem('user-profile');
+        if (saved) {
+          setProfile(JSON.parse(saved));
+        }
+      }
+    };
+    loadProfile();
   }, [locale]);
 
   const t = getTranslation(locale);
@@ -46,9 +64,28 @@ export default function AccountPage() {
     setProfile((prev) => ({ ...prev, [name]: value }));
   };
 
-  const saveProfile = () => {
-    localStorage.setItem('user-profile', JSON.stringify(profile));
-    setIsEditing(false);
+  const saveProfile = async () => {
+    try {
+      // Save to backend
+      const response = await fetch('/api/account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(profile),
+      });
+
+      if (response.ok) {
+        // Also save to localStorage as fallback
+        localStorage.setItem('user-profile', JSON.stringify(profile));
+        setIsEditing(false);
+      } else {
+        alert('Failed to save profile');
+      }
+    } catch (error) {
+      console.error('[v0] Error saving profile:', error);
+      // Fallback to localStorage
+      localStorage.setItem('user-profile', JSON.stringify(profile));
+      setIsEditing(false);
+    }
   };
 
   const handleLogout = () => {

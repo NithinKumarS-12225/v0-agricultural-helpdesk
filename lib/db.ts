@@ -13,6 +13,15 @@ export interface Response {
   createdAt: number;
 }
 
+export interface UserProfile {
+  id?: string;
+  name: string;
+  email: string;
+  phone: string;
+  region: string;
+  updatedAt?: number;
+}
+
 const DB_NAME = 'kisan-ai-db';
 const DB_VERSION = 1;
 
@@ -36,6 +45,10 @@ export const initDB = (): Promise<IDBDatabase> => {
 
       if (!database.objectStoreNames.contains('responses')) {
         database.createObjectStore('responses', { keyPath: 'id', autoIncrement: true });
+      }
+
+      if (!database.objectStoreNames.contains('userProfiles')) {
+        database.createObjectStore('userProfiles', { keyPath: 'id' });
       }
     };
 
@@ -107,6 +120,30 @@ export const updateQueryStatus = async (id: number, status: 'pending' | 'complet
     };
 
     getRequest.onerror = () => reject(getRequest.error);
+  });
+};
+
+export const saveUserProfile = async (profile: UserProfile): Promise<void> => {
+  const database = await initDB();
+  return new Promise((resolve, reject) => {
+    const transaction = database.transaction('userProfiles', 'readwrite');
+    const store = transaction.objectStore('userProfiles');
+    const request = store.put({ ...profile, updatedAt: Date.now() });
+
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
+};
+
+export const getUserProfile = async (id: string): Promise<UserProfile | null> => {
+  const database = await initDB();
+  return new Promise((resolve, reject) => {
+    const transaction = database.transaction('userProfiles', 'readonly');
+    const store = transaction.objectStore('userProfiles');
+    const request = store.get(id);
+
+    request.onsuccess = () => resolve(request.result || null);
+    request.onerror = () => reject(request.error);
   });
 };
 

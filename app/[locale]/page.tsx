@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useParams } from 'next/navigation';
 import type { Locale } from '@/i18n.config';
 import { getTranslation } from '@/lib/translations';
@@ -8,6 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Link from 'next/link';
 import { Sprout, Users, Truck, Cloud, FileText, Settings, Phone } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const AICallAgentModal = dynamic(() => import('@/components/AICallAgentModal'), {
+  loading: () => null,
+  ssr: false
+});
 
 export default function HomePage() {
   const params = useParams();
@@ -82,6 +88,12 @@ export default function HomePage() {
               <Phone className="h-5 w-5" />
               Call AI Agent Now
             </Button>
+            <a href="tel:7204954791">
+              <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 flex items-center justify-center gap-2">
+                <Phone className="h-5 w-5" />
+                Call Agri Expert
+              </Button>
+            </a>
             <Link href={`/${locale}/farmer`}>
               <Button size="lg" className="w-full sm:w-auto">
                 {t.nav.farmer}
@@ -148,7 +160,10 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* AI Call Agent - Coming Soon */}
+      {/* AI Call Agent Modal */}
+      <Suspense fallback={null}>
+        {showCallAgent && <AICallAgentModal isOpen={showCallAgent} onClose={() => setShowCallAgent(false)} locale={locale} />}
+      </Suspense>
     </div>
   );
 }
