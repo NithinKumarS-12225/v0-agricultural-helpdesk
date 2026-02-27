@@ -53,6 +53,8 @@ export default function PlantDiseasePage() {
     setError('');
 
     try {
+      console.log('[v0] Starting image analysis...');
+      
       const response = await fetch('/api/plant-disease', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -62,13 +64,21 @@ export default function PlantDiseasePage() {
         }),
       });
 
-      if (!response.ok) throw new Error('Analysis failed');
+      console.log('[v0] Response status:', response.status);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('[v0] API error:', errorData);
+        throw new Error(errorData.details || 'Analysis failed');
+      }
 
       const data = await response.json();
+      console.log('[v0] Analysis successful:', data.disease);
       setAnalysis(data);
     } catch (err) {
-      console.error('[v0] Analysis error:', err);
-      setError('Failed to analyze image. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to analyze image';
+      console.error('[v0] Analysis error:', errorMessage);
+      setError(errorMessage || 'Failed to analyze image. Please try again.');
     } finally {
       setIsLoading(false);
     }
