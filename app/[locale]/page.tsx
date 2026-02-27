@@ -8,11 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Link from 'next/link';
 import { Sprout, Users, Truck, Cloud, FileText, Settings, Phone, Map } from 'lucide-react';
+import StateExpertModal from '@/components/StateExpertModal';
 
 export default function HomePage() {
   const params = useParams();
   const locale = (params?.locale as Locale) || 'en';
   const [showCallAgent, setShowCallAgent] = useState(false);
+  const [showStateExpertModal, setShowStateExpertModal] = useState(false);
 
   const t = getTranslation(locale);
 
@@ -86,12 +88,14 @@ export default function HomePage() {
           <p className="mt-4 text-xl text-muted-foreground sm:text-2xl">{t.home.subtitle}</p>
           <p className="mt-6 text-lg text-muted-foreground">{t.home.description}</p>
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center">
-            <a href="tel:7204954791">
-              <Button size="lg" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 flex items-center justify-center gap-2">
-                <Phone className="h-5 w-5" />
-                Call Agri Expert
-              </Button>
-            </a>
+            <Button 
+              size="lg" 
+              className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 flex items-center justify-center gap-2"
+              onClick={() => setShowStateExpertModal(true)}
+            >
+              <Phone className="h-5 w-5" />
+              Call Agri Expert
+            </Button>
             <Link href={`/${locale}/farmer`}>
               <Button size="lg" className="w-full sm:w-auto">
                 {t.nav.farmer}
@@ -159,6 +163,12 @@ export default function HomePage() {
       </div>
 
       {/* AI Call Agent - Coming Soon */}
+
+      {/* State Expert Modal */}
+      <StateExpertModal 
+        isOpen={showStateExpertModal} 
+        onClose={() => setShowStateExpertModal(false)} 
+      />
     </div>
   );
 }

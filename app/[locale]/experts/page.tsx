@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import type { Locale } from '@/i18n.config';
 import { getTranslation } from '@/lib/translations';
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import expertsData from '@/data/experts.json';
-import { Phone, Mail, MapPin, Award, Users, Search, PhoneCall } from 'lucide-react';
+import { Phone, Mail, MapPin, Award, Search, Trophy } from 'lucide-react';
 
 interface Expert {
   id: number;
@@ -24,164 +24,215 @@ interface Expert {
   languages: string[];
 }
 
-export default function ExpertsPage() {
+export default function AgriExpertsPage() {
   const params = useParams();
   const locale = (params?.locale as Locale) || 'en';
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedSpecialty, setSelectedSpecialty] = useState('');
   const [selectedState, setSelectedState] = useState('');
+  const [selectedSpecialty, setSelectedSpecialty] = useState('');
 
   const t = getTranslation(locale);
 
   const experts: Expert[] = expertsData.experts;
 
-  // Get unique specialties and states
-  const specialties = Array.from(new Set(experts.map((e) => e.specialty)));
-  const states = Array.from(new Set(experts.map((e) => e.state))).sort();
+  const states = useMemo(() => 
+    Array.from(new Set(experts.map((e) => e.state))).sort(), 
+    [experts]
+  );
 
-  // Filter experts
-  const filtered = experts.filter((expert) => {
-    const matchesSearch =
-      expert.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      expert.specialty.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      expert.state.toLowerCase().includes(searchTerm.toLowerCase());
+  const specialties = useMemo(() => 
+    Array.from(new Set(experts.map((e) => e.specialty))).sort(), 
+    [experts]
+  );
 
-    const matchesSpecialty = !selectedSpecialty || expert.specialty === selectedSpecialty;
-    const matchesState = !selectedState || expert.state === selectedState;
+  const filteredExperts = useMemo(() => {
+    return experts.filter((expert) => {
+      const matchesSearch =
+        expert.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        expert.specialty.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        expert.qualification.toLowerCase().includes(searchTerm.toLowerCase());
 
-    return matchesSearch && matchesSpecialty && matchesState;
-  });
+      const matchesState = !selectedState || expert.state === selectedState;
+      const matchesSpecialty = !selectedSpecialty || expert.specialty === selectedSpecialty;
+
+      return matchesSearch && matchesState && matchesSpecialty;
+    });
+  }, [searchTerm, selectedState, selectedSpecialty, experts]);
 
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <div className="border-b border-border bg-gradient-to-r from-primary/10 to-secondary/10 px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <h1 className="text-3xl font-bold text-foreground">{t.experts.title}</h1>
-          <p className="mt-2 text-muted-foreground">{t.experts.description}</p>
+      <div className="relative bg-gradient-to-r from-green-500 to-emerald-600 px-4 py-12 sm:px-6 lg:px-8 text-white">
+        <div className="mx-auto max-w-4xl">
+          <h1 className="text-balance text-3xl font-bold sm:text-4xl">Agricultural Experts Directory</h1>
+          <p className="mt-2 text-lg opacity-90">
+            Connect with government-approved agricultural experts across India
+          </p>
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        {/* Search and Filter */}
-        <div className="mb-8 grid gap-4 sm:grid-cols-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
-            <Input
-              placeholder={t.experts.search}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
+      {/* Filters Section */}
+      <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
+          {/* Search */}
+          <div>
+            <label className="block text-sm font-medium mb-2">Search Expert</label>
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Name, specialty..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10"
+              />
+            </div>
           </div>
-          <select
-            value={selectedSpecialty}
-            onChange={(e) => setSelectedSpecialty(e.target.value)}
-            className="rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground"
-          >
-            <option value="">{t.experts.filter}</option>
-            {specialties.map((specialty) => (
-              <option key={specialty} value={specialty}>
-                {specialty}
-              </option>
-            ))}
-          </select>
-          <select
-            value={selectedState}
-            onChange={(e) => setSelectedState(e.target.value)}
-            className="rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground"
-          >
-            <option value="">All States</option>
-            {states.map((state) => (
-              <option key={state} value={state}>
-                {state}
-              </option>
-            ))}
-          </select>
+
+          {/* State Filter */}
+          <div>
+            <label className="block text-sm font-medium mb-2">State</label>
+            <select
+              value={selectedState}
+              onChange={(e) => setSelectedState(e.target.value)}
+              className="w-full rounded-md border border-input bg-background px-3 py-2"
+            >
+              <option value="">All States</option>
+              {states.map((state) => (
+                <option key={state} value={state}>
+                  {state}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Specialty Filter */}
+          <div>
+            <label className="block text-sm font-medium mb-2">Specialty</label>
+            <select
+              value={selectedSpecialty}
+              onChange={(e) => setSelectedSpecialty(e.target.value)}
+              className="w-full rounded-md border border-input bg-background px-3 py-2"
+            >
+              <option value="">All Specialties</option>
+              {specialties.map((specialty) => (
+                <option key={specialty} value={specialty}>
+                  {specialty}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Reset Filters */}
+          <div className="flex items-end">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSearchTerm('');
+                setSelectedState('');
+                setSelectedSpecialty('');
+              }}
+              className="w-full"
+            >
+              Reset Filters
+            </Button>
+          </div>
         </div>
 
         {/* Results Count */}
-        <div className="mb-6 text-sm text-muted-foreground">
-          {filtered.length} {filtered.length === 1 ? 'expert' : 'experts'} found
+        <div className="mb-6">
+          <p className="text-sm text-muted-foreground">
+            Found <span className="font-semibold text-foreground">{filteredExperts.length}</span> expert(s)
+          </p>
         </div>
 
         {/* Experts Grid */}
-        {filtered.length > 0 ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((expert) => (
-              <Card key={expert.id} className="flex flex-col overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 border-b border-border">
-                  <h3 className="font-bold text-lg text-foreground">{expert.name}</h3>
-                  <p className="text-sm text-muted-foreground">{expert.qualification}</p>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {filteredExperts.length === 0 ? (
+            <div className="col-span-full text-center py-12">
+              <p className="text-muted-foreground">No experts found matching your criteria.</p>
+            </div>
+          ) : (
+            filteredExperts.map((expert) => (
+              <Card
+                key={expert.id}
+                className="overflow-hidden hover:shadow-lg transition-shadow flex flex-col"
+              >
+                {/* Header */}
+                <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 p-6 border-b">
+                  <h3 className="font-bold text-lg leading-tight mb-1">{expert.name}</h3>
+                  <p className="text-sm text-muted-foreground flex items-center gap-1">
+                    <Award className="h-4 w-4" />
+                    {expert.qualification}
+                  </p>
                 </div>
 
-                <div className="flex-1 p-4 space-y-3">
+                {/* Content */}
+                <div className="p-6 flex-1 space-y-4">
+                  {/* Specialty */}
                   <div>
-                    <p className="text-xs font-semibold text-muted-foreground mb-1">{t.experts.specialty}</p>
-                    <p className="text-sm font-medium text-foreground">{expert.specialty}</p>
+                    <p className="text-sm font-semibold text-green-600 mb-1">Specialty</p>
+                    <p className="text-sm">{expert.specialty}</p>
                   </div>
 
-                  <div className="flex items-center gap-2 text-sm text-foreground">
-                    <Award className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span>
-                      {expert.experience} {t.experts.experience}
-                    </span>
+                  {/* Experience */}
+                  <div>
+                    <p className="text-sm font-semibold text-green-600 mb-1">Experience</p>
+                    <p className="text-sm flex items-center gap-1">
+                      <Trophy className="h-4 w-4" />
+                      {expert.experience} years
+                    </p>
                   </div>
 
-                  <div className="flex items-center gap-2 text-sm text-foreground">
-                    <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span>
+                  {/* Location */}
+                  <div>
+                    <p className="text-sm font-semibold text-green-600 mb-1">Location</p>
+                    <p className="text-sm flex items-center gap-1">
+                      <MapPin className="h-4 w-4" />
                       {expert.district}, {expert.state}
-                    </span>
+                    </p>
                   </div>
 
+                  {/* Languages */}
                   <div>
-                    <p className="text-xs font-semibold text-muted-foreground mb-1">Service Area</p>
+                    <p className="text-sm font-semibold text-green-600 mb-1">Languages</p>
                     <div className="flex flex-wrap gap-1">
-                      {expert.serviceArea.map((area) => (
+                      {expert.languages.map((lang) => (
                         <span
-                          key={area}
-                          className="inline-block rounded bg-primary/10 px-2 py-1 text-xs text-primary"
+                          key={lang}
+                          className="px-2 py-1 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs rounded-full"
                         >
-                          {area}
+                          {lang}
                         </span>
                       ))}
                     </div>
                   </div>
 
+                  {/* Service Areas */}
                   <div>
-                    <p className="text-xs font-semibold text-muted-foreground mb-1">Languages</p>
-                    <p className="text-sm text-foreground">{expert.languages.join(', ')}</p>
+                    <p className="text-sm font-semibold text-green-600 mb-1">Serves</p>
+                    <p className="text-sm">{expert.serviceArea.join(', ')}</p>
                   </div>
                 </div>
 
-                <div className="border-t border-border p-4 space-y-2">
+                {/* Footer - Contact */}
+                <div className="border-t p-4 space-y-2 bg-gray-50 dark:bg-gray-900">
                   <a href={`tel:${expert.phone}`}>
-                    <Button variant="outline" className="w-full justify-start" size="sm">
-                      <Phone className="mr-2 h-4 w-4" />
-                      {expert.phone}
+                    <Button size="sm" className="w-full bg-green-600 hover:bg-green-700">
+                      <Phone className="h-4 w-4 mr-2" />
+                      Call: {expert.phone}
                     </Button>
                   </a>
                   <a href={`mailto:${expert.email}`}>
-                    <Button variant="outline" className="w-full justify-start" size="sm">
-                      <Mail className="mr-2 h-4 w-4" />
+                    <Button size="sm" variant="outline" className="w-full">
+                      <Mail className="h-4 w-4 mr-2" />
                       Email
                     </Button>
                   </a>
-                  <Button className="w-full bg-green-600 hover:bg-green-700" size="sm">
-                    <PhoneCall className="mr-2 h-4 w-4" />
-                    Call Agri Expert
-                  </Button>
                 </div>
               </Card>
-            ))}
-          </div>
-        ) : (
-          <div className="rounded-lg border border-border bg-card p-12 text-center">
-            <Users className="mx-auto h-12 w-12 text-muted-foreground/50 mb-4" />
-            <p className="text-muted-foreground">No experts found matching your criteria</p>
-          </div>
-        )}
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
