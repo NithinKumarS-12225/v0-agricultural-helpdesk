@@ -5,6 +5,7 @@
     "marketplace": "Marketplace",
     "weather": "Weather",
     "schemes": "Schemes",
+    "bhoomiRtc": "Bhoomi RTC",
     "account": "Account"
   },
   "home": {
@@ -69,6 +70,22 @@
     "coverage": "Coverage",
     "apply": "Learn More",
     "loans": "Loan Programs"
+  },
+  "bhoomiRtc": {
+    "title": "Bhoomi RTC - Land Record Details",
+    "description": "View agricultural land details, soil information, and ownership records from Karnataka",
+    "selectDistrict": "Select District",
+    "landDetails": "Land Details",
+    "ownerName": "Owner Name",
+    "soilType": "Soil Type",
+    "landSize": "Land Size (Acres)",
+    "location": "Location",
+    "cultivationStatus": "Cultivation Status",
+    "cropType": "Crop Type",
+    "irrigationType": "Irrigation Type",
+    "rtcNumber": "RTC Number",
+    "surveyNumber": "Survey Number",
+    "noData": "No land records found for this district"
   },
   "account": {
     "title": "Account Settings",

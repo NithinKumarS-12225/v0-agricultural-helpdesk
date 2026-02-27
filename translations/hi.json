@@ -5,6 +5,7 @@
     "marketplace": "बाजार",
     "weather": "मौसम",
     "schemes": "योजनाएं",
+    "bhoomiRtc": "भूमि आरटीसी",
     "account": "खाता"
   },
   "home": {
@@ -69,6 +70,22 @@
     "coverage": "कवरेज",
     "apply": "अधिक जानें",
     "loans": "ऋण कार्यक्रम"
+  },
+  "bhoomiRtc": {
+    "title": "भूमि आरटीसी - भूमि रिकॉर्ड विवरण",
+    "description": "कर्नाटक से कृषि भूमि विवरण, मिट्टी की जानकारी और स्वामित्व रिकॉर्ड देखें",
+    "selectDistrict": "जिला चुनें",
+    "landDetails": "भूमि विवरण",
+    "ownerName": "मालिक का नाम",
+    "soilType": "मिट्टी का प्रकार",
+    "landSize": "भूमि का आकार (एकड़)",
+    "location": "स्थान",
+    "cultivationStatus": "खेती की स्थिति",
+    "cropType": "फसल का प्रकार",
+    "irrigationType": "सिंचाई का प्रकार",
+    "rtcNumber": "आरटीसी संख्या",
+    "surveyNumber": "सर्वेक्षण संख्या",
+    "noData": "इस जिले के लिए कोई भूमि रिकॉर्ड नहीं मिला"
   },
   "account": {
     "title": "खाता सेटिंग्स",

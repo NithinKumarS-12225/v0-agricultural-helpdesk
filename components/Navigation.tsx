@@ -36,6 +36,7 @@ export default function Navigation() {
     { href: 'experts', label: t.nav.experts },
     { href: 'marketplace', label: t.nav.marketplace },
     { href: 'weather', label: t.nav.weather },
+    { href: 'bhoomi-rtc', label: t.nav.bhoomiRtc },
     { href: 'plant-disease', label: 'Plant Disease' },
     { href: 'schemes', label: t.nav.schemes },
     { href: 'account', label: t.nav.account },
