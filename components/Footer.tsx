@@ -81,21 +81,25 @@ export default function Footer() {
           <div className="flex items-center gap-6">
             <div className="flex gap-4">
               <a
-                href="#"
+                href="https://github.com/NithinKumarS-12225"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-primary/10 rounded-full"
                 aria-label="Github"
               >
                 <Github className="h-5 w-5" />
               </a>
               <a
-                href="#"
+                href="https://www.linkedin.com/in/nithin-kumar-s-/"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-primary/10 rounded-full"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
               <a
-                href="#"
+                href="mailto:nithinkumar12225@gmail.com"
                 className="text-muted-foreground hover:text-primary transition-colors p-2 hover:bg-primary/10 rounded-full"
                 aria-label="Email"
               >
