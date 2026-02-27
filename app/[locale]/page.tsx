@@ -7,7 +7,7 @@ import { getTranslation } from '@/lib/translations';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import Link from 'next/link';
-import { Sprout, Users, Truck, Cloud, FileText, Settings, Phone } from 'lucide-react';
+import { Sprout, Users, Truck, Cloud, FileText, Settings, Phone, Map } from 'lucide-react';
 
 export default function HomePage() {
   const params = useParams();
@@ -48,6 +48,14 @@ export default function HomePage() {
       href: `/${locale}/weather`,
       color: 'bg-sky-100 dark:bg-sky-900',
       iconColor: 'text-sky-600 dark:text-sky-400',
+    },
+    {
+      icon: Map,
+      title: t.nav.bhoomiRtc,
+      description: 'View land records, soil types, and ownership details',
+      href: `/${locale}/bhoomi-rtc`,
+      color: 'bg-emerald-100 dark:bg-emerald-900',
+      iconColor: 'text-emerald-600 dark:text-emerald-400',
     },
     {
       icon: FileText,
