@@ -24,25 +24,25 @@ A comprehensive full-stack web application designed to empower Indian farmers wi
 - Product inquiry system
 - Local storage for product listings
 
-  ### 4. **Bhoomi RTC**
+### 4. **Bhoomi RTC**
   - List of Farmer land accound details
   - List of different districts for easier access of Land records
 
-### 4. **Real-Time Weather Analysis**
+### 5. **Real-Time Weather Analysis**
 - Current weather conditions with agricultural insights
 - 7-day weather forecast
 - Geolocation-based weather data
 - Farming recommendations based on weather
 - Activity recommendations and warnings
 
-### 5. **Government Schemes & Loans**
+### 6. **Government Schemes & Loans**
 - 10+ government agricultural schemes database
 - Loan programs with eligibility and terms
 - Detailed scheme information with benefits
 - Application process guidance
 - State-wise availability tracking
 
-### 6. **Account Settings**
+### 7. **Account Settings**
 - User profile management
 - Light/Dark theme toggle
 - Language preferences (English, Hindi, Kannada)
